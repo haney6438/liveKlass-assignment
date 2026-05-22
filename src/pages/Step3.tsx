@@ -1,11 +1,15 @@
 import { Link } from "react-router-dom"
 
+import Header from "../components/Header";
+import Indicator from "../components/Indicator";
+
 function Step3() {
     return (
-        <div>
-            확인 및 제출
+        <>
+            <Header />
+            <Indicator />
             <Link to="/complete"> 제출 </Link>
-        </div>
+        </>
     );
 }
 

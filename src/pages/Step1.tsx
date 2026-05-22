@@ -13,8 +13,8 @@ function Step1() {
     return (
         <>
             <Header />
+            <Indicator />
             <div className="container">
-                <Indicator />
                 <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>강의 목록</p>
                     <div className="lec-page">
