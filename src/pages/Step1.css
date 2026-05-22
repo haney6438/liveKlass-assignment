@@ -1,0 +1,103 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5%;
+}
+
+.content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 80px;
+}
+
+.lec-page {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+.lec-category {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.lec-list {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+}
+.lec{
+    width: 300px;
+    border: 2px solid white;
+    border-radius: 12px;
+    padding: 30px 15px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+.lec:hover {
+    border-color: #0056b3;
+}
+.lec:active {
+    transform: scale(0.98);
+}
+.lec-img-wrap {
+    width: 100%;
+    aspect-ratio: 1024 / 560;
+    background-color:gray;
+    overflow: hidden;
+    border-radius: 12px;
+}
+.lec-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* 비율 유지하며 꽉 채우기 */
+    display: block;
+}
+
+.info {
+    margin-top: 20px;
+}
+
+.type-section {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.type {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    width: 50%;
+    border: 2px solid gray;
+    border-radius: 12px;
+    padding: 30px 15px 30px 15px;
+    margin-right: 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+.type:hover {
+    border-color: #0056b3;
+    background-color: #bebebe;
+}
+.type:active {
+    transform: scale(0.98);
+}
+
+.btn-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 80px;
+}
