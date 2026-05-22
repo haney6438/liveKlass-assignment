@@ -32,6 +32,9 @@ function Step1() {
                     <div className="lec-list">
                         <div className="lec">
                             <div className="lec-img-wrap">
+                                <div className="lec-remain">
+                                    🔥마감임박
+                                </div>
                                 <img
                                     className="lec-img"
                                     alt="img1"
@@ -51,9 +54,9 @@ function Step1() {
                 <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>선택한 강의</p>
                     <div className="info">
-                        제목: 백엔드 개발 과정
-                        가격: 25,000 원
+                        강의명: Figma 8주 완성
                         일정: 2026.05.22 - 2026.06.22
+                        가격: 18,000 원
                     </div>
                 </div>
                 <div className="content">
