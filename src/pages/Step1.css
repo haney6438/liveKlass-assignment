@@ -93,6 +93,10 @@
 .type:active {
     transform: scale(0.98);
 }
+.type.selected {
+    border-color: #0056b3;
+    background-color: #e8f0fe;
+}
 
 .btn-section {
     width: 100%;
