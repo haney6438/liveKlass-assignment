@@ -11,12 +11,14 @@ import type { Course } from "../type/course";
 
 function Step1() {
     const navigate = useNavigate();
+
     const [courses, setCourses] = useState<Course[]>([]);
+    const [category, setCategory] = useState<string>("all");
 
     useEffect(() => {
-        const result = getCourses();
+        const result = getCourses(category);
         setCourses(result.courses);
-    }, []);
+    }, [category]);
 
     return (
         <>
@@ -27,15 +29,13 @@ function Step1() {
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>강의 목록</p>
                     <div className="course-page">
                         <span>수강할 강의를 선택하세요.</span>
-                        <button>이전</button>
-                        <button>다음</button>
                     </div>
                     <div className="course-category">
-                        <button>All</button>
-                        <button>개발</button>
-                        <button>디자인</button>
-                        <button>마케팅</button>
-                        <button>비즈니스</button>
+                        <button onClick={()=>setCategory("all")}>All</button>
+                        <button onClick={()=>setCategory("development")}>개발</button>
+                        <button onClick={()=>setCategory("design")}>디자인</button>
+                        <button onClick={()=>setCategory("marketing")}>마케팅</button>
+                        <button onClick={()=>setCategory("business")}>비즈니스</button>
                     </div>
                     <div className="course-list">
                         {courses.map((course)=>(
@@ -65,9 +65,11 @@ function Step1() {
                 <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>선택한 강의</p>
                     <div className="info">
-                        강의명: Figma 8주 완성
-                        일정: 2026.05.22 - 2026.06.22
-                        가격: 18,000 원
+                            {/* <p>강의명: {course.title}</p>
+                            <p>교육기간: {course.startDate} ~ {course.endDate}</p>
+                            <p>가격: {course.price.toLocaleString()}원</p>
+                            <p>남은 인원: {course.currentEnrollment}/{course.maxCapacity}</p>
+                            <p>강사: {course.instructor}</p> */}
                     </div>
                 </div>
                 <div className="content">
