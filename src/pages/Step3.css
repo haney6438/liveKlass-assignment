@@ -1,10 +1,27 @@
 .check-section1{
-    border: 2px solid gray;
-    border-radius: 12px;
-    padding: 30px 15px 5px 15px;
     display: flex;
     flex-direction: row;
     align-items: stretch;
+    position: relative; 
+    width:100%;
+    border: 2px solid gray;
+    border-radius: 12px;
+    padding: 15px;
+}
+.edit{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: fit-content;
+    border: 2px solid black;
+    border-radius: 12px;
+    background-color: white;
+    color: black;
+    padding: 4px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
 }
 .img-wrap {
     flex:1;
@@ -24,15 +41,48 @@
 }
 
 .check-section2{
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    position: relative; 
+    width:100%;
     border: 2px solid gray;
     border-radius: 12px;
-    padding: 30px 15px 5px 15px;
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
+    padding: 15px;
+    margin-top: 15px;
 }
 .indi-wrap{
+    display: flex;
+    flex-direction:column;
+    align-items:flex-start;
 }
 .group-wrap{
+    display: flex;
+    flex-direction:column;
+    align-items:flex-start;
+    margin-top: 15px;
+}
+
+.terms-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 40px;
+}
+
+.terms {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.submit-section{
+    margin-bottom: 40px;
 
 }
