@@ -1,4 +1,33 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Pretendard Variable", Pretendard;
+    overflow-x: hidden;
+}
+
 :root {
+    --lk-red: #FC1150;
+    --lk-purple: #C5BAFD;
+    --lk-purple-light: #EFE4FE;
+    --lk-blue: #B5D2FF;
+    --lk-blue-light: #EBF7FF;
+    --lk-green: #94D1B3;
+    --lk-green-light: #EDFAD8;
+    --gray1: #8E8E93;
+    --gray2: #AEAEB2;
+    --gray3: #C7C7CC;
+    --gray4: #D1D1D6;
+    --gray5: #E5E5EA;
+    --gray6: #F2F2F7;
+}
+
+/* :root {
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
@@ -51,8 +80,8 @@
 }
 
 #root {
-  /* width: 1126px;
-  max-width: 100%; */
+  width: 1126px;
+  max-width: 100%;
   margin: 0 auto;
   text-align: center;
   border-inline: 1px solid var(--border);
@@ -110,4 +139,4 @@ code {
   line-height: 135%;
   padding: 4px 8px;
   background: var(--code-bg);
-}
+} */
