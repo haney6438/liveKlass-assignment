@@ -1,14 +1,22 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./Step1.css";
 import Header from "../components/Header";
 import Indicator from "../components/Indicator";
 
-import img1 from "../img/img1.png";
 import { FaUser, FaUsers } from "react-icons/fa";
+import { getCourses } from "../api/courseApi";
+import type { Course } from "../type/course";
 
 function Step1() {
     const navigate = useNavigate();
+    const [courses, setCourses] = useState<Course[]>([]);
+
+    useEffect(() => {
+        const result = getCourses();
+        setCourses(result.courses);
+    }, []);
 
     return (
         <>
@@ -30,25 +38,28 @@ function Step1() {
                         <button>비즈니스</button>
                     </div>
                     <div className="course-list">
-                        <div className="course">
+                        {courses.map((course)=>(
+                        <div className="course" key={course.id}>
                             <div className="course-img-wrap">
                                 <div className="course-badge">
                                     🔥마감임박
                                 </div>
+                                {course.image&&(
                                 <img
                                     className="course-img"
-                                    alt="img1"
-                                    src={img1}
+                                    alt={course.title}
+                                    src={course.image}
                                     onError={(e) => {
                                         e.currentTarget.style.display = 'none';
                                     }}
                                 />
+                                )}
                             </div>
-                            <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Figma 8주 완성</p>
-                            <p style={{ fontSize: '14px' }}>교육기간 | 26.05.22 ~ 26.07.10</p>
-                            <p style={{ fontSize: '14px' }}>가격 | 18,000원</p>
+                            <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{course.title}</p>
+                            <p style={{ fontSize: '14px' }}>교육기간 | {course.startDate} ~ {course.endDate}</p>
+                            <p style={{ fontSize: '14px' }}>가격 | {course.price.toLocaleString()}원</p>
                         </div>
-
+                        ))}
                     </div>
                 </div>
                 <div className="content">
