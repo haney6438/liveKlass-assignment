@@ -11,7 +11,7 @@ function Step2() {
             <Header />
             <Indicator />
             <div className="container">
-                <div className="content2">
+                <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>Figma 8주 완성<span> - 개인</span></p>
                     <p style={{ fontSize: '14px' }}>(*)표시는 필수입력 사항입니다.</p>
                 </div>

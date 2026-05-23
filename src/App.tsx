@@ -5,6 +5,8 @@ import Step2 from "./pages/Step2";
 import Step3 from "./pages/Step3";
 import Complete from "./pages/Complete";
 
+import "./App.css";
+
 function App() {
   return (
     <BrowserRouter>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 import './Step3.css';
 import Header from "../components/Header";
@@ -22,11 +22,11 @@ function Step3() {
                             수정
                         </div>
                         <div className="img-wrap">
-                            <div className="lec-remain">
+                            <div className="course-badge">
                                 🔥마감임박
                             </div>
                             <img
-                                className="lec-img"
+                                className="course-img"
                                 alt="img1"
                                 src={img1}
                                 onError={(e) => {
