@@ -59,21 +59,45 @@ function Step2() {
         name: '',
         email: '',
         phone: '',
+        organizationName: '',
+        contactPerson: '',
     });
+    const [participantErrors, setParticipantErrors] = useState<{
+        name: string;
+        email: string
+    }[]>(group.participants.map(() => ({ name: '', email: '' }))
+    );
 
     const handleValidate = () => {
         const nameError = validateName(applicant.name);
         const emailError = validateEmail(applicant.email);
         const phoneError = validatePhone(applicant.phone);
+        //단체
+        const organizationNameError = type === 'group' ? validateName(group.organizationName) : '';
+        const contactPersonError = type === 'group' ? validatePhone(group.contactPerson) : '';
+        //참가자 명단
+        const participantErrs = group.participants.map((p) => ({
+            name: type === 'group' ? validateName(p.name) : '',
+            email: type === 'group' ? validateEmail(p.email) : '',
+        }));
+        setParticipantErrors(participantErrs);
+        const hasParticipantError = participantErrs.some(p => p.name || p.email);
 
         setErrors({
             name: nameError,
             email: emailError,
             phone: phoneError,
+            organizationName: organizationNameError,
+            contactPerson: contactPersonError,
         });
 
-        if (nameError || emailError || phoneError) {
-            const firstErrorField = nameError ? 'name' : emailError ? 'email' : 'phone';
+
+        if (nameError || emailError || phoneError || organizationNameError || contactPersonError || hasParticipantError) {
+            const firstErrorField = nameError ? 'name'
+                : emailError ? 'email'
+                    : phoneError ? 'phone'
+                        : organizationNameError ? 'organizationName'
+                            : 'contactPerson';
 
             document.getElementById(firstErrorField)?.focus();
 
@@ -87,7 +111,7 @@ function Step2() {
     //이름
     const validateName = (name: string) => {
         if (!name.trim()) {
-            return '이름은 필수항목입니다.';
+            return '필수항목입니다.';
         }
 
         if (name.trim().length < 2) {
@@ -112,7 +136,7 @@ function Step2() {
     //전화번호
     const validatePhone = (phone: string) => {
         if (!phone.trim()) {
-            return '전화번호는 필수항목입니다.';
+            return '필수항목입니다.';
         }
 
         const phoneRegex = /^0\d{1,2}-?\d{3,4}-?\d{4}$/;
@@ -191,11 +215,17 @@ function Step2() {
                             )}
                         </div>
                     </div>
+
                     <div className="input-section">
                         <label>수강 동기</label>
-                        <textarea value={applicant.motivation}
-                            onChange={(e) => setApplicant(prev => ({ ...prev, motivation: e.target.value }))}
-                            placeholder="수강 동기를 입력하세요 (최대 300자)" />
+                        <div className="input">
+                            <textarea value={applicant.motivation}
+                                onChange={(e) => setApplicant(prev => ({ ...prev, motivation: e.target.value }))}
+                                placeholder="수강 동기를 입력하세요 (최대 300자)" />
+                            <p style={{ fontSize: '10px', color: applicant.motivation && applicant.motivation.length >= 300 ? 'red' : 'gray' }}>
+                                {applicant.motivation?.length ?? 0}/300
+                            </p>
+                        </div>
                     </div>
                 </div>
 
@@ -204,11 +234,20 @@ function Step2() {
                     <div className="input-section">
                         <label><span>*</span>단체명 </label>
                         <div className="input">
-                            <input className="name-input" type="text" value={group.organizationName}
+                            <input
+                                id="organizationName"
+                                className={errors.organizationName ? 'short-input error' : 'short-input'}
+                                type="text"
+                                value={group.organizationName}
                                 onChange={(e) => setGroup(prev => ({ ...prev, organizationName: e.target.value }))}
-                                placeholder="단체명을 입력하세요" />
-                            <p>단체명은 필수항목입니다</p>
-                        </div></div>
+                                onBlur={() => setErrors(prev => ({ ...prev, organizationName: validateName(group.organizationName) }))}
+                                placeholder="단체명을 입력하세요"
+                            />
+                            {errors.organizationName && (
+                                <p>{errors.organizationName}</p>
+                            )}
+                        </div>
+                    </div>
 
                     <div className="input-section">
                         <label><span>*</span>신청 인원수 </label>
@@ -220,24 +259,42 @@ function Step2() {
                     </div>
 
                     <div className="input-section">
-                        <label><span>*</span>참가자 명단 </label>
-                        <div className="group-section">
+                        <label><span>*</span>참가자 명단 </label><div className="group-section">
                             {group.participants.map((participant, index) => (
                                 <div className="group-info" key={index}>
-                                    <input type="text" value={participant.name}
-                                        placeholder="이름을 입력하세요"
+                                    <input
+                                        className={participantErrors[index]?.name ? 'n-input error' : 'n-input'}
+                                        type="text"
+                                        value={participant.name}
                                         onChange={(e) => {
                                             const updated = [...group.participants];
                                             updated[index] = { ...updated[index], name: e.target.value };
                                             setGroup(prev => ({ ...prev, participants: updated }));
-                                        }} />
-                                    <input type="email" name='gropM' value={participant.email}
+                                        }}
+                                        onBlur={() => {
+                                            const updated = [...participantErrors];
+                                            updated[index] = { ...updated[index], name: validateName(participant.name) };
+                                            setParticipantErrors(updated);
+                                        }}
+                                        placeholder="이름을 입력하세요"
+                                    />
+                                    <input
+                                        name='groupM'
+                                        className={participantErrors[index]?.email ? 'e-input error' : 'e-input'}
+                                        type="email"
+                                        value={participant.email}
                                         placeholder="중복된 이메일 사용은 불가합니다"
                                         onChange={(e) => {
                                             const updated = [...group.participants];
                                             updated[index] = { ...updated[index], email: e.target.value };
                                             setGroup(prev => ({ ...prev, participants: updated }));
-                                        }} />
+                                        }}
+                                        onBlur={() => {
+                                            const updated = [...participantErrors];
+                                            updated[index] = { ...updated[index], email: validateEmail(participant.email) };
+                                            setParticipantErrors(updated);
+                                        }}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -245,9 +302,20 @@ function Step2() {
 
                     <div className="input-section">
                         <label><span>*</span>담당자 연락처 </label>
-                        <input type="tel" value={group.contactPerson}
-                            onChange={(e) => setGroup(prev => ({ ...prev, contactPerson: e.target.value }))}
-                            placeholder="한국 전화번호 형식만 가능합니다" />
+                        <div className="input">
+                            <input
+                                id="contactPerson"
+                                className={errors.contactPerson ? 'long-input error' : 'long-input'}
+                                type="text"
+                                value={group.contactPerson}
+                                onChange={(e) => setGroup(prev => ({ ...prev, contactPerson: e.target.value }))}
+                                onBlur={() => setErrors(prev => ({ ...prev, contactPerson: validatePhone(group.contactPerson) }))}
+                                placeholder="한국 전화번호 형식만 가능합니다"
+                            />
+                            {errors.contactPerson && (
+                                <p>{errors.contactPerson}</p>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className="btn2-section">
