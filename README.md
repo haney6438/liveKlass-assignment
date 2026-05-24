@@ -23,9 +23,21 @@ npm run dev
 ```
 브라우저에서 http://localhost:5173 접속
 
-- **Mock 데이터/서버 구성 방법**:
-  
-- **test코드 설명**:
+## Mock 데이터 / 서버 구성
+
+- 실제 서버 대신 `mock` 폴더의 데이터를 사용해 강의 목록 및 신청 데이터를 관리했습니다.
+- 실제 API 호출 대신 `mock` 데이터를 반환하므로 별도 서버 실행 없이 npm run dev 만으로 동작합니다.
+
+### 폴더 구조
+
+```txt
+src/
+ ┣ api/        # Mock API 함수 (강의 조회, 수강 신청)
+ ┣ mock/       # Mock 데이터 (강의 목록, 신청 내역)
+ ┣ pages/      # 페이지 컴포넌트 (Step1~3, Complete)
+ ┣ components/ # 공통 컴포넌트 (Header, Indicator, Terms)
+ ┣ type/       # TypeScript 타입 정의 (Course, Enrollment)
+```
 
 
 ## 요구사항 해석 및 가정
