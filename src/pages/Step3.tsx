@@ -18,7 +18,7 @@ function Step3() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const { courseId, type, applicant } = location.state;
+    const { courseId, type, applicant, group } = location.state;
 
     const findcourses = getCourses("all").courses;
     const userCourse = findcourses.find((course) =>
@@ -29,31 +29,29 @@ function Step3() {
             <Header />
             <Indicator />
             <div className="container">
-                {userCourse?.title}
-                {applicant?.name}
-                {type}
                 <div className="content">
                     <div className="check-section1">
                         <div className="edit" onClick={() => navigate('/step1')}>
                             수정
                         </div>
                         <div className="img-wrap">
-                            <div className="course-badge">
-                                🔥마감임박
-                            </div>
-                            <img
-                                className="course-img"
-                                alt="img1"
-                                src={img1}
-                                onError={(e) => {
-                                    e.currentTarget.style.display = 'none';
-                                }}
-                            />
+                            {userCourse?.image && (
+                                <img
+                                    className="course-img"
+                                    alt={userCourse?.title}
+                                    src={userCourse?.image}
+                                    onError={(e) => {
+                                        e.currentTarget.style.display = 'none';
+                                    }}
+                                />
+                            )}
                         </div>
                         <div className="info-wrap">
-                            <p style={{ fontSize: '20px', fontWeight: 'bold' }}>Figma 8주 완성</p>
-                            <p style={{ fontSize: '14px' }}>교육기간 | 26.05.22 ~ 26.07.10</p>
-                            <p style={{ fontSize: '14px' }}>가격 | 18,000원</p>
+                            <p>강의명: {userCourse?.title}</p>
+                            <p>교육기간: {userCourse?.startDate} ~ {userCourse?.endDate}</p>
+                            <p>가격: {userCourse?.price.toLocaleString()}원</p>
+                            <p>남은 인원: {userCourse?.currentEnrollment}/{userCourse?.maxCapacity}</p>
+                            <p>강사: {userCourse?.instructor}</p>
                         </div>
                     </div>
 
@@ -63,16 +61,22 @@ function Step3() {
                         </div>
                         <div className="indi-wrap">
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }}>신청자</p>
-                            <p style={{ fontSize: '14px' }}>이름:</p>
-                            <p style={{ fontSize: '14px' }}>이메일:</p>
-                            <p style={{ fontSize: '14px' }}>전화번호: </p>
-                            <p style={{ fontSize: '14px' }}>수강동기:</p>
+                            <p style={{ fontSize: '14px' }}>이름: {applicant?.name}</p>
+                            <p style={{ fontSize: '14px' }}>이메일:{applicant?.email}</p>
+                            <p style={{ fontSize: '14px' }}>전화번호: {applicant?.phone}</p>
+                            <p style={{ fontSize: '14px' }}>수강동기:{applicant?.motivation}</p>
                         </div>
-                <div className={type === 'group' ? 'group-wrap vi' : 'group-wrap'}>
+                        <div className={type === 'group' ? 'group-wrap vi' : 'group-wrap'}>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }}>단체</p>
-                            <p style={{ fontSize: '14px' }}>단체명: </p>
-                            <p style={{ fontSize: '14px' }}>신청 인원:</p>
+                            <p style={{ fontSize: '14px' }}>단체명: {group?.organizationName}</p>
+                            <p style={{ fontSize: '14px' }}>신청 인원: {group?.headCount}</p>
                             <p style={{ fontSize: '14px' }}>참가자 명단: </p>
+                            {group?.participants.map((participant: { name: string; email: string }, index: number) => (
+                                <div key={index}>
+                                    <p style={{ fontSize: '14px' }}>{participant.name} / {participant.email}</p>
+                                </div>
+                            ))}
+                            <p style={{ fontSize: '14px' }}>담당자 연락처: {group?.contactPerson}</p>
                         </div>
                     </div>
                 </div>
