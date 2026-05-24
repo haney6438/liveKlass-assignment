@@ -25,6 +25,10 @@ function Step3() {
         course.id === courseId);
     const [open, setOpen] = useState(false);
 
+    //유효성 검증
+    const [agree, setAgree] = useState(false);
+    const [termsViewed, setTermsViewed] = useState(false);
+
     return (
         <>
             <Header />
@@ -82,15 +86,26 @@ function Step3() {
                     </div>
                 </div>
                 <div className="terms-section">
-                    <div className="terms" onClick={() => setOpen(true)}>
+                    <div className="terms" onClick={() => { setOpen(true); setTermsViewed(true); }}>
                         <p style={{ fontSize: '14px' }}>이용약관(필수)</p>
                         <IoIosArrowForward size={14} />
                     </div>
                     <Terms isOpen={open} onClose={() => setOpen(false)} />
-                    <input type="checkbox" />
+                    <input
+                        type="checkbox"
+                        checked={agree}
+                        disabled={!termsViewed}
+                        onChange={(e) => setAgree(e.target.checked)}
+                    />
                 </div>
                 <div className="submit-section">
-                    <button onClick={() => navigate('/complete')}>제출</button>
+                    <button onClick={() => {
+                        if (!agree) {
+                            alert('이용약관에 동의해주세요.');
+                            return;
+                        }
+                        navigate('/complete');
+                    }}>제출</button>
 
                 </div>
             </div>
