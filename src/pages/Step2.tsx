@@ -54,6 +54,75 @@ function Step2() {
         }));
     };
 
+    //유효성 검증
+    const [errors, setErrors] = useState({
+        name: '',
+        email: '',
+        phone: '',
+    });
+
+    const handleValidate = () => {
+        const nameError = validateName(applicant.name);
+        const emailError = validateEmail(applicant.email);
+        const phoneError = validatePhone(applicant.phone);
+
+        setErrors({
+            name: nameError,
+            email: emailError,
+            phone: phoneError,
+        });
+
+        if (nameError || emailError || phoneError) {
+            const firstErrorField = nameError ? 'name' : emailError ? 'email' : 'phone';
+
+            document.getElementById(firstErrorField)?.focus();
+
+            alert('입력한 정보를 다시 확인해주세요.');
+
+            return false;
+        }
+
+        return true;
+    };
+    //이름
+    const validateName = (name: string) => {
+        if (!name.trim()) {
+            return '이름은 필수항목입니다.';
+        }
+
+        if (name.trim().length < 2) {
+            return '이름은 2글자 이상이어야 합니다.';
+        }
+
+        return '';
+    };
+    //이메일
+    const validateEmail = (email: string) => {
+        if (!email.trim()) {
+            return '이메일은 필수항목입니다.';
+        }
+
+        const emailRegex = /^[^\s@]{1,64}@[^\s@]+\.[^\s@]{2,}$/;
+        if (!emailRegex.test(email) || email.length > 320) {
+            return '올바른 이메일 형식이 아닙니다.';
+        }
+
+        return '';
+    };
+    //전화번호
+    const validatePhone = (phone: string) => {
+        if (!phone.trim()) {
+            return '전화번호는 필수항목입니다.';
+        }
+
+        const phoneRegex = /^0\d{1,2}-?\d{3,4}-?\d{4}$/;
+        if (!phoneRegex.test(phone)) {
+            return '올바른 전화번호 형식이 아닙니다.';
+        }
+
+        return '';
+    };
+
     return (
         <>
             <Header />
@@ -71,23 +140,56 @@ function Step2() {
                     <div className="input-section">
                         <label><span>*</span>이름 </label>
                         <div className="input">
-                            <input className="name-input" type="text" value={applicant.name}
+                            <input
+                                id="name"
+                                className={errors.name ? 'short-input error' : 'short-input'}
+                                type="text"
+                                value={applicant.name}
                                 onChange={(e) => setApplicant(prev => ({ ...prev, name: e.target.value }))}
-                                placeholder="이름을 입력하세요" />
-                            <p>이름은 필수항목입니다</p>
+                                onBlur={() => setErrors(prev => ({ ...prev, name: validateName(applicant.name) }))}
+                                placeholder="이름을 입력하세요"
+                            />
+                            {errors.name && (
+                                <p>{errors.name}</p>
+                            )}
                         </div>
                     </div>
+
                     <div className="input-section">
                         <label><span>*</span>이메일 </label>
-                        <input type="email" name='perM' value={applicant.email}
-                            onChange={(e) => setApplicant(prev => ({ ...prev, email: e.target.value }))}
-                            placeholder="중복된 이메일 사용은 불가합니다" />
+                        <div className="input">
+                            <input
+                                id="email"
+                                name='perM'
+                                className={errors.email ? 'long-input error' : 'long-input'}
+                                type="text"
+                                value={applicant.email}
+                                onChange={(e) => setApplicant(prev => ({ ...prev, email: e.target.value }))}
+                                onBlur={() => setErrors(prev => ({ ...prev, email: validateEmail(applicant.email) }))}
+                                placeholder="중복된 이메일 사용은 불가합니다"
+                            />
+                            {errors.email && (
+                                <p>{errors.email}</p>
+                            )}
+                        </div>
                     </div>
+
                     <div className="input-section">
                         <label><span>*</span>전화번호 </label>
-                        <input type="tel" value={applicant.phone}
-                            onChange={(e) => setApplicant(prev => ({ ...prev, phone: e.target.value }))}
-                            placeholder="한국 전화번호 형식만 가능합니다" />
+                        <div className="input">
+                            <input
+                                id="phone"
+                                className={errors.phone ? 'long-input error' : 'long-input'}
+                                type="text"
+                                value={applicant.phone}
+                                onChange={(e) => setApplicant(prev => ({ ...prev, phone: e.target.value }))}
+                                onBlur={() => setErrors(prev => ({ ...prev, phone: validatePhone(applicant.phone) }))}
+                                placeholder="한국 전화번호 형식만 가능합니다"
+                            />
+                            {errors.phone && (
+                                <p>{errors.phone}</p>
+                            )}
+                        </div>
                     </div>
                     <div className="input-section">
                         <label>수강 동기</label>
@@ -150,14 +252,24 @@ function Step2() {
                 </div>
                 <div className="btn2-section">
                     <button onClick={() => navigate('/step1')}>이전</button>
-                    <button onClick={() => navigate('/step3', {
-                        state: {
-                            courseId,
-                            type,
-                            applicant,
-                            group
-                        }
-                    })}>다음</button>
+                    <button
+                        onClick={() => {
+                            const isValid = handleValidate();
+
+                            if (!isValid) return;
+
+                            navigate('/step3', {
+                                state: {
+                                    courseId,
+                                    type,
+                                    applicant,
+                                    group
+                                }
+                            });
+                        }}
+                    >
+                        다음
+                    </button>
                 </div>
             </div >
         </>

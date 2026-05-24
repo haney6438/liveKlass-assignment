@@ -4,9 +4,27 @@
     padding: 4px 0 4px 0;
 }
 .input{
-
+    min-height:50px;
+    padding-left: 4px;
 }
-.name-input{
+.input p {
+    color: red;
+    font-size: 10px;
+}
+.short-input{
+    width: 80%;
+    padding: 10px 14px;
+    border: 1px solid gray;
+    border-radius: 8px;
+    background-color: white;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+.short-input.error {
+    border: 1px solid red;
+}
+.long-input{
     width: 100%;
     padding: 10px 14px;
     border: 1px solid gray;
@@ -16,7 +34,9 @@
     outline: none;
     box-sizing: border-box;
 }
-
+.long-input.error {
+    border: 1px solid red;
+}
 .group-section {}
 
 .group-info {}
