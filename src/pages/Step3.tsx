@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import './Step3.css';
 import Header from "../components/Header";
 import Indicator from "../components/Indicator";
-// import Terms from "../components/Terms";
+import Terms from "../components/Terms";
 
 import { IoIosArrowForward } from "react-icons/io";
 import img1 from "../img/img1.png";
@@ -23,6 +23,7 @@ function Step3() {
     const findcourses = getCourses("all").courses;
     const userCourse = findcourses.find((course) =>
         course.id === courseId);
+    const [open, setOpen] = useState(false);
 
     return (
         <>
@@ -81,10 +82,11 @@ function Step3() {
                     </div>
                 </div>
                 <div className="terms-section">
-                    <div className="terms">
+                    <div className="terms" onClick={() => setOpen(true)}>
                         <p style={{ fontSize: '14px' }}>이용약관(필수)</p>
                         <IoIosArrowForward size={14} />
                     </div>
+                    <Terms isOpen={open} onClose={() => setOpen(false)} />
                     <input type="checkbox" />
                 </div>
                 <div className="submit-section">
