@@ -60,6 +60,11 @@
     color: white;
     padding: 4px 8px;
     font-size: 12px;
+    visibility: hidden;
+}
+.course-badge.vi{
+    visibility: visible;
+    
 }
 
 .info {

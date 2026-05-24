@@ -50,7 +50,8 @@ function Step1() {
                             <div className={userCourse === course.id ? 'course selected' : 'course'} key={course.id}
                                 onClick={() => setUserCourse(course.id)}>
                                 <div className="course-img-wrap">
-                                    <div className="course-badge">
+                                    <div className={course.currentEnrollment/course.maxCapacity>=0.8? 
+                                        'course-badge vi':'course-badge'}>
                                         🔥마감임박
                                     </div>
                                     {course.image && (

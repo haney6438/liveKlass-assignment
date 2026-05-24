@@ -29,6 +29,7 @@ function Step2() {
                         <span> - {type === 'personal' ? '개인' : '단체'}</span></p>
                     <p style={{ fontSize: '14px' }}>(*)표시는 필수입력 사항입니다.</p>
                 </div>
+
                 <div className="content">
                     <p style={{ fontSize: '32px' }}>신청자</p>
                     <div className="input-section">
@@ -47,6 +48,7 @@ function Step2() {
                         <label>수강 동기</label>
                         <textarea placeholder="수강 동기를 입력하세요 (최대 300자)" /></div>
                 </div>
+                
                 <div className="content">
                     <p style={{ fontSize: '32px' }}>단체 정보</p>
                     <div className="input-section">
