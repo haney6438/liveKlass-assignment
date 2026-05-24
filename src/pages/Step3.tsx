@@ -104,7 +104,22 @@ function Step3() {
                             alert('이용약관에 동의해주세요.');
                             return;
                         }
-                        navigate('/complete');
+                        const response = postEnrollment({
+                            courseId,
+                            type,
+                            applicant,
+                            agreedToTerms: true,
+                            ...(type === 'group' && { group })
+                        });
+                        navigate('/complete', {
+                            state: {
+                                courseId,
+                                type,
+                                applicant,
+                                group,
+                                enrollmentId: response.enrollmentId
+                            }
+                        });
                     }}>제출</button>
 
                 </div>
