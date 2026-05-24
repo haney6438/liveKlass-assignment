@@ -15,12 +15,18 @@ function Step1() {
     const [courses, setCourses] = useState<Course[]>([]);
     const [category, setCategory] = useState<string>("all");
 
-    const [enrollType, setEnrollType] = useState<'personal' | 'group'>('personal');
-    
+    const [userCourse, setUserCourse] = useState<string | null>(null);
+    const [userType, setUserType] = useState<'personal' | 'group'>();
+
+    const filteredCourses = courses.filter((course) =>
+        category === "all" ? true : course.category === category);
+    const selectedCourse = courses.find((course) =>
+        course.id === userCourse);
+
     useEffect(() => {
-        const result = getCourses(category);
+        const result = getCourses("all");
         setCourses(result.courses);
-    }, [category]);
+    }, []);
 
     return (
         <>
@@ -40,8 +46,9 @@ function Step1() {
                         <button onClick={() => setCategory("business")}>비즈니스</button>
                     </div>
                     <div className="course-list">
-                        {courses.map((course) => (
-                            <div className="course" key={course.id}>
+                        {filteredCourses.map((course) => (
+                            <div className={userCourse === course.id ? 'course selected' : 'course'} key={course.id}
+                                onClick={() => setUserCourse(course.id)}>
                                 <div className="course-img-wrap">
                                     <div className="course-badge">
                                         🔥마감임박
@@ -66,25 +73,29 @@ function Step1() {
                 </div>
                 <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>선택한 강의</p>
-                    <div className="info">
-                        {/* <p>강의명: {course.title}</p>
-                            <p>교육기간: {course.startDate} ~ {course.endDate}</p>
-                            <p>가격: {course.price.toLocaleString()}원</p>
-                            <p>남은 인원: {course.currentEnrollment}/{course.maxCapacity}</p>
-                            <p>강사: {course.instructor}</p> */}
-                    </div>
+                    {selectedCourse ? (
+                        <div className="info">
+                            <p>강의명: {selectedCourse.title}</p>
+                            <p>교육기간: {selectedCourse.startDate} ~ {selectedCourse.endDate}</p>
+                            <p>가격: {selectedCourse.price.toLocaleString()}원</p>
+                            <p>남은 인원: {selectedCourse.currentEnrollment}/{selectedCourse.maxCapacity}</p>
+                            <p>강사: {selectedCourse.instructor}</p>
+                        </div>
+                    ) : (
+                        <div className="info" />
+                    )}
                 </div>
                 <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>신청 유형</p>
                     <div className="type-section">
-                        <div className={enrollType === 'personal' ? 'type selected' : 'type'}
-                            onClick={() => setEnrollType('personal')}
+                        <div className={userType === 'personal' ? 'type selected' : 'type'}
+                            onClick={() => setUserType('personal')}
                         >
                             <FaUser size={32} />
                             <p style={{ fontSize: '14px' }}> 개인 신청</p>
                         </div>
-                        <div className={enrollType === 'group' ? 'type selected' : 'type'}
-                            onClick={() => setEnrollType('group')}
+                        <div className={userType === 'group' ? 'type selected' : 'type'}
+                            onClick={() => setUserType('group')}
                         >
                             <FaUsers size={32} />
                             <p style={{ fontSize: '14px' }}> 단체 신청</p>
@@ -92,10 +103,14 @@ function Step1() {
 
                     </div>
                 </div>
-                <div className="btn-section">
-                    <button onClick={() => navigate('/step2')}>다음</button>
-                </div>
-            </div></>
+                <button onClick={() => navigate('/step2', {
+                    state: {
+                        courseId: userCourse,
+                        type: userType
+                    }
+                })}>다음</button>
+            </div>
+        </>
     );
 }
 

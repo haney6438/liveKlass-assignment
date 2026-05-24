@@ -1,18 +1,32 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import './Step2.css';
 import Header from "../components/Header";
 import Indicator from "../components/Indicator";
 
+import { getCourses } from "../api/courseApi";
+import type { Course } from "../type/course";
+import { postEnrollment } from "../api/enrollmentApi";
+
 function Step2() {
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const { courseId, type } = location.state;
+
+    const findcourses = getCourses("all").courses;
+    const userCourse = findcourses.find((course) =>
+        course.id === courseId);
+
     return (
         <>
             <Header />
             <Indicator />
             <div className="container">
                 <div className="content">
-                    <p style={{ fontSize: '32px', fontWeight: 'bold' }}>Figma 8주 완성<span> - 개인</span></p>
+                    <p style={{ fontSize: '32px', fontWeight: 'bold' }}>
+                        {userCourse?.title}
+                        <span> - {type === 'personal' ? '개인' : '단체'}</span></p>
                     <p style={{ fontSize: '14px' }}>(*)표시는 필수입력 사항입니다.</p>
                 </div>
                 <div className="content">

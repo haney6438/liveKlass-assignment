@@ -33,6 +33,9 @@
 .course:active {
     transform: scale(0.98);
 }
+.course.selected {
+    border-color: #0056b3;
+}
 .course-img-wrap {
     width: 100%;
     aspect-ratio: 720 / 480;
