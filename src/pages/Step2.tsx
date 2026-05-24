@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 import './Step2.css';
@@ -7,6 +8,7 @@ import Indicator from "../components/Indicator";
 import { getCourses } from "../api/courseApi";
 import type { Course } from "../type/course";
 import { postEnrollment } from "../api/enrollmentApi";
+import type { PersonalEnrollmentRequest, GroupEnrollmentRequest } from "../type/enrollment";
 
 function Step2() {
     const navigate = useNavigate();
@@ -17,6 +19,22 @@ function Step2() {
     const findcourses = getCourses("all").courses;
     const userCourse = findcourses.find((course) =>
         course.id === courseId);
+
+    // 신청자
+    const [applicant, setApplicant] = useState<PersonalEnrollmentRequest['applicant']>({
+        name: '',
+        email: '',
+        phone: '',
+        motivation: ''
+    });
+
+    // 단체
+    const [group, setGroup] = useState<GroupEnrollmentRequest['group']>({
+        organizationName: '',
+        headCount: 0,
+        participants: [],
+        contactPerson: ''
+    });
 
     return (
         <>
@@ -35,7 +53,9 @@ function Step2() {
                     <div className="input-section">
                         <label><span>*</span>이름 </label>
                         <div className="input">
-                            <input className="name-input" type="text" placeholder="이름을 입력하세요" />
+                            <input className="name-input" type="text" value={applicant.name}
+                                onChange={(e) => setApplicant(prev => ({ ...prev, name: e.target.value }))}
+                                placeholder="이름을 입력하세요" />
                             <p>이름은 필수항목입니다</p>
                         </div></div>
                     <div className="input-section">
@@ -48,8 +68,8 @@ function Step2() {
                         <label>수강 동기</label>
                         <textarea placeholder="수강 동기를 입력하세요 (최대 300자)" /></div>
                 </div>
-                
-                <div className="content">
+
+                <div className={type === 'group' ? 'content' : 'content invi'}>
                     <p style={{ fontSize: '32px' }}>단체 정보</p>
                     <div className="input-section">
                         <label><span>*</span>단체명 </label>
@@ -84,10 +104,15 @@ function Step2() {
                         <input type="tel" placeholder="한국 전화번호 형식만 가능합니다" />
                     </div>
                 </div>
-
                 <div className="btn2-section">
                     <button onClick={() => navigate('/step1')}>이전</button>
-                    <button onClick={() => navigate('/step3')}>다음</button>
+                    <button onClick={() => navigate('/step3', {
+                        state: {
+                            courseId,
+                            type,
+                            applicant
+                        }
+                    })}>다음</button>
                 </div>
             </div >
         </>

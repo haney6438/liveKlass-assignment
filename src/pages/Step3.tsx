@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import './Step3.css';
 import Header from "../components/Header";
@@ -8,17 +9,32 @@ import Indicator from "../components/Indicator";
 import { IoIosArrowForward } from "react-icons/io";
 import img1 from "../img/img1.png";
 
+import { getCourses } from "../api/courseApi";
+import type { Course } from "../type/course";
+import { postEnrollment } from "../api/enrollmentApi";
+import type { PersonalEnrollmentRequest, GroupEnrollmentRequest } from "../type/enrollment";
+
 function Step3() {
-    const navigate=useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const { courseId, type, applicant } = location.state;
+
+    const findcourses = getCourses("all").courses;
+    const userCourse = findcourses.find((course) =>
+        course.id === courseId);
 
     return (
         <>
             <Header />
             <Indicator />
             <div className="container">
+                {userCourse?.title}
+                {applicant?.name}
+                {type}
                 <div className="content">
                     <div className="check-section1">
-                        <div className="edit" onClick={()=>navigate('/step1')}>
+                        <div className="edit" onClick={() => navigate('/step1')}>
                             수정
                         </div>
                         <div className="img-wrap">
@@ -42,17 +58,17 @@ function Step3() {
                     </div>
 
                     <div className="check-section2">
-                        <div className="edit" onClick={()=>navigate('/step2')}>
+                        <div className="edit" onClick={() => navigate('/step2')}>
                             수정
                         </div>
                         <div className="indi-wrap">
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }}>신청자</p>
-                            <p style={{ fontSize: '14px' }}>이름: </p>
+                            <p style={{ fontSize: '14px' }}>이름:</p>
                             <p style={{ fontSize: '14px' }}>이메일:</p>
                             <p style={{ fontSize: '14px' }}>전화번호: </p>
                             <p style={{ fontSize: '14px' }}>수강동기:</p>
                         </div>
-                        <div className="group-wrap">
+                <div className={type === 'group' ? 'group-wrap vi' : 'group-wrap'}>
                             <p style={{ fontSize: '20px', fontWeight: 'bold' }}>단체</p>
                             <p style={{ fontSize: '14px' }}>단체명: </p>
                             <p style={{ fontSize: '14px' }}>신청 인원:</p>

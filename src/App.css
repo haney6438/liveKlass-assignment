@@ -26,6 +26,9 @@
     align-items: flex-start;
     margin-bottom: 40px;
 }
+.content.invi {
+  visibility: hidden;
+}
 
 /* 
 .counter {

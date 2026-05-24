@@ -57,10 +57,13 @@
     align-items:flex-start;
 }
 .group-wrap{
-    display: flex;
+    display: none;
     flex-direction:column;
     align-items:flex-start;
     margin-top: 15px;
+}
+.group-wrap.vi{
+    display:flex;
 }
 
 .terms-section {
