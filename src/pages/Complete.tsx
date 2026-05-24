@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+import './Complete.css';
+
+import { MdOutlineCelebration, MdHorizontalRule } from "react-icons/md";
 
 import { getCourses } from "../api/courseApi";
-import './Complete.css';
-import { MdOutlineCelebration, MdHorizontalRule } from "react-icons/md";
 
 function Complete() {
     const location = useLocation();

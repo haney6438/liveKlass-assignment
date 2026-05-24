@@ -7,12 +7,9 @@ import Indicator from "../components/Indicator";
 import Terms from "../components/Terms";
 
 import { IoIosArrowForward } from "react-icons/io";
-import img1 from "../img/img1.png";
 
 import { getCourses } from "../api/courseApi";
-import type { Course } from "../type/course";
 import { postEnrollment } from "../api/enrollmentApi";
-import type { PersonalEnrollmentRequest, GroupEnrollmentRequest } from "../type/enrollment";
 
 function Step3() {
     const navigate = useNavigate();
