@@ -59,7 +59,7 @@ function Step1() {
                     <div className="course-list">
                         {filteredCourses.length === 0 ? (
                             <div className="content">
-                                <CgSmileNone size={64} color= "var(--lk-blue)" />
+                                <CgSmileNone size={64} color="var(--lk-blue)" />
                                 <p>강의를 준비 중입니다 ..</p>
                             </div>
                         ) : (
@@ -133,12 +133,22 @@ function Step1() {
                     </div>
                 </div>
                 <div className="btn-section">
-                    <button className='btn-next' onClick={() => navigate('/step2', {
-                        state: {
-                            courseId: userCourse,
-                            type: userType
+                    <button className='btn-next' onClick={() => {
+                        if (!userCourse) {
+                            alert('강의를 선택해주세요.');
+                            return;
                         }
-                    })}>다음</button>
+                        if (!userType) {
+                            alert('신청 유형을 선택해주세요.');
+                            return;
+                        }
+                        navigate('/step2', {
+                            state: {
+                                courseId: userCourse,
+                                type: userType
+                            }
+                        });
+                    }}>다음</button>
                 </div>
             </div>
         </>

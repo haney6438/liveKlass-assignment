@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import './Complete.css';
 
 import { MdOutlineCelebration, MdHorizontalRule } from "react-icons/md";
+import popper from '../img/popper.png';
 
 import { getCourses } from "../api/courseApi";
 
@@ -17,7 +18,7 @@ function Complete() {
             <div className="container">
                 <div className="sub-container">
                     <div className="notice-section">
-                        <MdOutlineCelebration size={64} />
+                        <img src={popper} alt="popper" width={64} height={64} />
                         <p>신청되었습니다</p>
                         <p style={{ fontSize: '14px' }}>{enrollmentId}</p>
                         <MdHorizontalRule size={32} />
