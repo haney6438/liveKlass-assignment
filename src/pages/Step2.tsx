@@ -318,9 +318,9 @@ function Step2() {
                         </div>
                     </div>
                 </div>
-                <div className="btn2-section">
-                    <button onClick={() => navigate('/step1')}>이전</button>
-                    <button
+                <div className="btn-section">
+                    <button className='btn-next'  onClick={() => navigate('/step1')}>이전</button>
+                    <button className='btn-next' 
                         onClick={() => {
                             const isValid = handleValidate();
 

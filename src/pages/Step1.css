@@ -139,13 +139,7 @@
     color: white;
 }
 
-.btn-section {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-bottom: 80px;
-}
+
 .btn-category{
     width: fit-content;
     border: none;
@@ -162,14 +156,4 @@
 .btn-category.selected{
     background-color: black;
     color: white;
-}
-.btn-next{
-    width: fit-content;
-    border: none;
-    border-radius: 6px;
-    background-color: #B32572;
-    color: white;
-    padding: 4px 8px;
-    font-size: 20px;
-
 }

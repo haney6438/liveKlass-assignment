@@ -96,7 +96,7 @@ function Step3() {
                     />
                 </div>
                 <div className="submit-section">
-                    <button onClick={() => {
+                    <button  className='btn-next' onClick={() => {
                         if (!agree) {
                             alert('이용약관에 동의해주세요.');
                             return;
