@@ -8,6 +8,11 @@ import Indicator from "../components/Indicator";
 import { FaUser, FaUsers } from "react-icons/fa";
 import { getCourses } from "../api/courseApi";
 import type { Course } from "../type/course";
+//강의 목록 캐로셀 효과
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { A11y, Navigation } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
 
 function Step1() {
     const navigate = useNavigate();
@@ -39,37 +44,53 @@ function Step1() {
                         <span>수강할 강의를 선택하세요.</span>
                     </div>
                     <div className="course-category">
-                        <button onClick={() => setCategory("all")}>All</button>
-                        <button onClick={() => setCategory("development")}>개발</button>
-                        <button onClick={() => setCategory("design")}>디자인</button>
-                        <button onClick={() => setCategory("marketing")}>마케팅</button>
-                        <button onClick={() => setCategory("business")}>비즈니스</button>
+                        <button className={category === "all" ? "btn-category selected" : "btn-category"}
+                            onClick={() => setCategory("all")}>All</button>
+                        <button className={category === "development" ? "btn-category selected" : "btn-category"}
+                            onClick={() => setCategory("development")}>개발</button>
+                        <button className={category === "design" ? "btn-category selected" : "btn-category"}
+                            onClick={() => setCategory("design")}>디자인</button>
+                        <button className={category === "marketing" ? "btn-category selected" : "btn-category"}
+                            onClick={() => setCategory("marketing")}>마케팅</button>
+                        <button className={category === "business" ? "btn-category selected" : "btn-category"}
+                            onClick={() => setCategory("business")}>비즈니스</button>
                     </div>
                     <div className="course-list">
-                        {filteredCourses.map((course) => (
-                            <div className={userCourse === course.id ? 'course selected' : 'course'} key={course.id}
-                                onClick={() => setUserCourse(course.id)}>
-                                <div className="course-img-wrap">
-                                    <div className={course.currentEnrollment/course.maxCapacity>=0.8? 
-                                        'course-badge vi':'course-badge'}>
-                                        🔥마감임박
+                        <Swiper
+                            modules={[A11y, Navigation]}
+                            spaceBetween={20}
+                            slidesPerView={3.2}
+                            navigation
+                            observer={true}
+                            observeParents={true}
+                        >
+                            {filteredCourses.map((course) => (
+                                <SwiperSlide key={course.id}>
+                                    <div className={userCourse === course.id ? 'course selected' : 'course'} key={course.id}
+                                        onClick={() => setUserCourse(course.id)}>
+                                        <div className="course-img-wrap">
+                                            <div className={course.currentEnrollment / course.maxCapacity >= 0.8 ?
+                                                'course-badge vi' : 'course-badge'}>
+                                                🔥마감임박
+                                            </div>
+                                            {course.image && (
+                                                <img
+                                                    className="course-img"
+                                                    alt={course.title}
+                                                    src={course.image}
+                                                    onError={(e) => {
+                                                        e.currentTarget.style.display = 'none';
+                                                    }}
+                                                />
+                                            )}
+                                        </div>
+                                        <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{course.title}</p>
+                                        <p style={{ fontSize: '14px' }}>교육기간 | {course.startDate} ~ {course.endDate}</p>
+                                        <p style={{ fontSize: '14px' }}>가격 | {course.price.toLocaleString()}원</p>
                                     </div>
-                                    {course.image && (
-                                        <img
-                                            className="course-img"
-                                            alt={course.title}
-                                            src={course.image}
-                                            onError={(e) => {
-                                                e.currentTarget.style.display = 'none';
-                                            }}
-                                        />
-                                    )}
-                                </div>
-                                <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{course.title}</p>
-                                <p style={{ fontSize: '14px' }}>교육기간 | {course.startDate} ~ {course.endDate}</p>
-                                <p style={{ fontSize: '14px' }}>가격 | {course.price.toLocaleString()}원</p>
-                            </div>
-                        ))}
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
                     </div>
                 </div>
                 <div className="content">
@@ -92,27 +113,29 @@ function Step1() {
                         <div className={userType === 'personal' ? 'type selected' : 'type'}
                             onClick={() => setUserType('personal')}
                         >
-                            <FaUser size={32} />
+                            <FaUser size={32} color={userType === 'personal' ? 'white' : 'black'} />
                             <p style={{ fontSize: '14px' }}> 개인 신청</p>
                         </div>
                         <div className={userType === 'group' ? 'type selected' : 'type'}
                             onClick={() => setUserType('group')}
                         >
-                            <FaUsers size={32} />
+                            <FaUsers size={32} color={userType === 'group' ? 'white' : 'black'} />
                             <p style={{ fontSize: '14px' }}> 단체 신청</p>
                         </div>
 
                     </div>
                 </div>
-                <button onClick={() => navigate('/step2', {
-                    state: {
-                        courseId: userCourse,
-                        type: userType
-                    }
-                })}>다음</button>
+                <div className="btn-section">
+                    <button className='btn-next' onClick={() => navigate('/step2', {
+                        state: {
+                            courseId: userCourse,
+                            type: userType
+                        }
+                    })}>다음</button>
+                </div>
             </div>
         </>
     );
 }
 
-export default Step1;
+export default Step1; 

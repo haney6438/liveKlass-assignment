@@ -26,11 +26,12 @@ function Indicator() {
                     <p style={{ fontSize: '28px' }}>{title}</p>
                 </div>
                 <div className="step-section">
-                    {step > 1 ? <BsCheckCircle size={20} /> : <BsCircleFill size={20} />}
-                    <BsDashLg size={20} />
-                    {step > 2 ? <BsCheckCircle size={20} /> : step === 2 ? <BsCircleFill size={20} /> : <BsCircle size={20} />}
-                    <BsDashLg size={20} />
-                    {step === 3 ? <BsCircleFill size={20} /> : <BsCircle size={20} />}
+                    {step > 1 ? <BsCheckCircle size={20} color="var(--lk-purple-light)"/> : <BsCircleFill size={20} color="var(--lk-purple)" />}
+                    <BsDashLg size={20} color="var(--gray3)"/>
+                    {step > 2 ? <BsCheckCircle size={20} color="var(--lk-blue)"/> : 
+                    step === 2 ? <BsCircleFill size={20} color="var(--lk-blue)"/> : <BsCircle size={20} color="var(--lk-blue)"/>}
+                    <BsDashLg size={20} color="var(--gray3)"/>
+                    {step === 3 ? <BsCircleFill size={20} color="var(--lk-green)"/> : <BsCircle size={20} color="var(--lk-green)"/>}
                 </div>
 
             </div>
