@@ -142,6 +142,11 @@ function Step1() {
                             alert('신청 유형을 선택해주세요.');
                             return;
                         }
+                        const selected = courses.find(c => c.id === userCourse);
+                        if (selected && selected.currentEnrollment >= selected.maxCapacity) {
+                            alert('정원이 초과된 강의입니다.');
+                            return;
+                        }
                         navigate('/step2', {
                             state: {
                                 courseId: userCourse,

@@ -105,6 +105,17 @@ function Step2() {
 
             return false;
         }
+        // 단체일 때 정원 초과 체크
+        if (type === 'group') {
+            const course = findcourses.find(c => c.id === courseId);
+            if (course) {
+                const remaining = course.maxCapacity - course.currentEnrollment;
+                if (group.headCount > remaining) {
+                    alert(`신청 가능 인원은 ${remaining}명입니다.`);
+                    return false;
+                }
+            }
+        }
 
         return true;
     };
@@ -319,13 +330,27 @@ function Step2() {
                     </div>
                 </div>
                 <div className="btn-section">
-                    <button className='btn-next'  onClick={() => navigate('/step1')}>이전</button>
-                    <button className='btn-next' 
+                    <button className='btn-next' onClick={() => navigate('/step1')}>이전</button>
+                    <button className='btn-next'
                         onClick={() => {
                             const isValid = handleValidate();
 
                             if (!isValid) return;
 
+                            const result = postEnrollment(
+                                type === 'group'
+                                    ? { courseId, type, applicant, group, agreedToTerms: true }
+                                    : { courseId, type, applicant, agreedToTerms: true }
+                            );
+
+                            if ('code' in result) {
+                                if (result.details) {
+                                    setErrors(prev => ({ ...prev, ...result.details }));
+                                } else {
+                                    alert(result.message);
+                                }
+                                return;
+                            }
                             navigate('/step3', {
                                 state: {
                                     courseId,
