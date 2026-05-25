@@ -75,7 +75,7 @@ function Step3() {
                             <p style={{ fontSize: '14px' }}>참가자 명단: </p>
                             {group?.participants.map((participant: { name: string; email: string }, index: number) => (
                                 <div key={index}>
-                                    <p style={{ fontSize: '14px' }}>{participant.name} / {participant.email}</p>
+                                    <p style={{ fontSize: '14px' }}>{participant.name} | {participant.email}</p>
                                 </div>
                             ))}
                             <p style={{ fontSize: '14px' }}>담당자 연락처: {group?.contactPerson}</p>
@@ -96,18 +96,21 @@ function Step3() {
                     />
                 </div>
                 <div className="submit-section">
-                    <button  className='btn-next' onClick={() => {
+                    <button className='btn-next' onClick={() => {
                         if (!agree) {
                             alert('이용약관에 동의해주세요.');
                             return;
                         }
-                        const response = postEnrollment({
-                            courseId,
-                            type,
-                            applicant,
-                            agreedToTerms: true,
-                            ...(type === 'group' && { group })
-                        });
+                        const response = postEnrollment(
+                            type === 'group'
+                                ? { courseId, type, applicant, group, agreedToTerms: true }
+                                : { courseId, type, applicant, agreedToTerms: true }
+                        );
+
+                        if ('code' in response) {
+                            alert(response.message);
+                            return;
+                        }
                         navigate('/complete', {
                             state: {
                                 courseId,
