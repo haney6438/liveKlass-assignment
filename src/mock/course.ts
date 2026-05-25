@@ -1,5 +1,9 @@
 import type { Course } from "../type/course";
-import img1 from "../img/img1.png";
+import busniessimg from "../img/busniess.png";
+import figmaimg from "../img/figma.png";
+// import marketingimg from "../img/marketing.png";
+import reactimg from "../img/react.png";
+import javaimg from "../img/java.png";
 
 export const mockCourses: Course[] = [
     {
@@ -13,7 +17,6 @@ export const mockCourses: Course[] = [
         startDate: "2026-05-22",
         endDate: "2026-06-22",
         instructor: "이강사",
-        image: img1,
     },
     {
         id: "2",
@@ -26,6 +29,7 @@ export const mockCourses: Course[] = [
         startDate: "2026-06-01",
         endDate: "2026-07-01",
         instructor: "이강사",
+        image:reactimg
     },
     {
         id: "3",
@@ -38,7 +42,7 @@ export const mockCourses: Course[] = [
         startDate: "2026-06-15",
         endDate: "2026-07-15",
         instructor: "박강사",
-        image: img1,
+        image:javaimg
     },
     {
         id: "4",
@@ -51,20 +55,21 @@ export const mockCourses: Course[] = [
         startDate: "2026-05-22",
         endDate: "2026-07-10",
         instructor: "김강사",
-        image: img1,
+        image: figmaimg
     },
-    {
-        id: "5",
-        title: "마케팅 전략 과정",
-        description: "디지털 마케팅 기초",
-        category: "marketing",
-        price: 15000,
-        maxCapacity: 10,
-        currentEnrollment: 1,
-        startDate: "2026-06-01",
-        endDate: "2026-07-01",
-        instructor: "최강사",
-    },
+    // {
+    //     id: "5",
+    //     title: "마케팅 전략 과정",
+    //     description: "디지털 마케팅 기초",
+    //     category: "marketing",
+    //     price: 15000,
+    //     maxCapacity: 10,
+    //     currentEnrollment: 1,
+    //     startDate: "2026-06-01",
+    //     endDate: "2026-07-01",
+    //     instructor: "최강사",
+    //     image: marketingimg
+    // },
     {
         id: "6",
         title: "비즈니스 전략 입문",
@@ -76,7 +81,7 @@ export const mockCourses: Course[] = [
         startDate: "2026-06-01",
         endDate: "2026-07-01",
         instructor: "정강사",
-        image: img1,
+        image: busniessimg
     },
     {
         id: "7",

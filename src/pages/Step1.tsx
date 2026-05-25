@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import Indicator from "../components/Indicator";
 
 import { FaUser, FaUsers } from "react-icons/fa";
+import { CgSmileNone } from "react-icons/cg";
 import { getCourses } from "../api/courseApi";
 import type { Course } from "../type/course";
 //강의 목록 캐로셀 효과
@@ -56,42 +57,48 @@ function Step1() {
                             onClick={() => setCategory("business")}>비즈니스</button>
                     </div>
                     <div className="course-list">
-                        <Swiper
-                            modules={[A11y, Navigation]}
-                            spaceBetween={20}
-                            slidesPerView={3.2}
-                            navigation
-                            observer={true}
-                            observeParents={true}
-                        >
-                            {filteredCourses.map((course) => (
-                                <SwiperSlide key={course.id}>
-                                    <div className={userCourse === course.id ? 'course selected' : 'course'} key={course.id}
-                                        onClick={() => setUserCourse(course.id)}>
-                                        <div className="course-img-wrap">
-                                            <div className={course.currentEnrollment / course.maxCapacity >= 0.8 ?
-                                                'course-badge vi' : 'course-badge'}>
-                                                🔥마감임박
+                        {filteredCourses.length === 0 ? (
+                            <div className="content">
+                                <CgSmileNone size={64} color= "var(--lk-blue)" />
+                                <p>강의를 준비 중입니다 ..</p>
+                            </div>
+                        ) : (
+                            <Swiper
+                                modules={[A11y, Navigation]}
+                                spaceBetween={20}
+                                slidesPerView={3.2}
+                                navigation
+                                observer={true}
+                                observeParents={true}
+                            >
+                                {filteredCourses.map((course) => (
+                                    <SwiperSlide key={course.id}>
+                                        <div className={userCourse === course.id ? 'course selected' : 'course'} key={course.id}
+                                            onClick={() => setUserCourse(course.id)}>
+                                            <div className="course-img-wrap">
+                                                <div className={course.currentEnrollment / course.maxCapacity >= 0.8 ?
+                                                    'course-badge vi' : 'course-badge'}>
+                                                    🔥마감임박
+                                                </div>
+                                                {course.image && (
+                                                    <img
+                                                        className="course-img"
+                                                        alt={course.title}
+                                                        src={course.image}
+                                                        onError={(e) => {
+                                                            e.currentTarget.style.display = 'none';
+                                                        }}
+                                                    />
+                                                )}
                                             </div>
-                                            {course.image && (
-                                                <img
-                                                    className="course-img"
-                                                    alt={course.title}
-                                                    src={course.image}
-                                                    onError={(e) => {
-                                                        e.currentTarget.style.display = 'none';
-                                                    }}
-                                                />
-                                            )}
+                                            <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{course.title}</p>
+                                            <p style={{ fontSize: '14px' }}>교육기간 | {course.startDate} ~ {course.endDate}</p>
+                                            <p style={{ fontSize: '14px' }}>가격 | {course.price.toLocaleString()}원</p>
                                         </div>
-                                        <p style={{ fontSize: '20px', fontWeight: 'bold' }}>{course.title}</p>
-                                        <p style={{ fontSize: '14px' }}>교육기간 | {course.startDate} ~ {course.endDate}</p>
-                                        <p style={{ fontSize: '14px' }}>가격 | {course.price.toLocaleString()}원</p>
-                                    </div>
-                                </SwiperSlide>
-                            ))}
-                        </Swiper>
-                    </div>
+                                    </SwiperSlide>
+                                ))}
+                            </Swiper>
+                        )}</div>
                 </div>
                 <div className="content">
                     <p style={{ fontSize: '32px', fontWeight: 'bold' }}>선택한 강의</p>
